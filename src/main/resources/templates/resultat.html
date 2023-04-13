@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="ca" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>DAW2 Spring</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+</head>
+<body>
+    <h2>Resultat</h2>
+    <h3 th:text="'El resultat de la '+${operacio}+' entre '+${n1}+' i '+${n2}+' és '+${resultat}+'.'"></h3>
+</body>
+</html>
