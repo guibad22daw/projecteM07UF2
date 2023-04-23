@@ -1,7 +1,9 @@
-package edu.fje.daw2.projecteM07UF2.controladors;
+package edu.fje2.daw2.spring1.controladors;
 
-import edu.fje.daw2.projecteM07UF2.model.Client;
-import edu.fje.daw2.projecteM07UF2.repositoris.ClientRepositori;
+
+
+import edu.fje2.daw2.spring1.model.Client;
+import edu.fje2.daw2.spring1.repositoris.M4_ClientRepositori;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -22,7 +24,7 @@ import java.util.List;
 public class ClientsController {
 
     @Autowired
-    private ClientRepositori repositori;
+    private M4_ClientRepositori repositori;
 
     @ModelAttribute("clients")
     public List<Client> inicialitzar() {
@@ -34,30 +36,30 @@ public class ClientsController {
         return clients;
     }
 
-    @RequestMapping(value={"/client", "/usuari"})
+    @RequestMapping(value = {"/client", "/usuari"})
     String mostrarFormulari() {
-        return("formulari");
+        return ("formulari");
     }
 
-    @RequestMapping(value="/desarClient", method = RequestMethod.POST)
+    @RequestMapping(value = "/desarClient", method = RequestMethod.POST)
     String desarClient(@SessionAttribute("clients") List<Client> clients,
-                       @RequestParam (defaultValue = "") String nom,
-                       @RequestParam (defaultValue = "") String cognom,
-                       @RequestParam (defaultValue = "") int volumCompres,
-                       ModelMap model){
+                       @RequestParam(defaultValue = "") String nom,
+                       @RequestParam(defaultValue = "") String cognom,
+                       @RequestParam(defaultValue = "") int volumCompres,
+                       ModelMap model) {
         Client c = new Client(nom, cognom, volumCompres);
         repositori.save(c);
 
-        if(!model.containsAttribute("clients")) {
+        if (!model.containsAttribute("clients")) {
             model.addAttribute("clients", clients);
         }
         clients.add(c);
-        return("llistarClients");
+        return ("llistarClients");
     }
 
-    @RequestMapping(value="/esborrarClient", method = RequestMethod.GET)
+    @RequestMapping(value = "/esborrarClient", method = RequestMethod.GET)
     String esborrarClient(@SessionAttribute("clients") List<Client> clients,
-                          @RequestParam (defaultValue = "") String id){
+                          @RequestParam(defaultValue = "") String id) {
 
         System.out.println(id);
 
@@ -66,15 +68,14 @@ public class ClientsController {
         t.setId(id);
         clients.remove(t);
 
-        return("llistarClients");
+        return ("llistarClients");
     }
 
-    @RequestMapping(value="/mostrarClients", method = RequestMethod.GET)
-    void mostrarClients(){
-        List <Client> client = new ArrayList<Client>();
-        for (Client c : repositori.findByCognom("Grau")) {
+    @RequestMapping(value = "/mostrarClients", method = RequestMethod.GET)
+    void mostrarClients() {
+        List<Client> clients = new ArrayList<Client>();
+        for (Client c : repositori.findByCognom("Uno")) {
             System.out.println(c);
         }
     }
-
 }

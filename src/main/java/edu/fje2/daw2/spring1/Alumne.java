@@ -1,16 +1,17 @@
-package edu.fje.daw2.projecteM07UF2.model;
+package edu.fje2.daw2.spring1;
+
+import java.util.Comparator;
+import java.util.Objects;
 
 public class Alumne {
     private String nom;
     private String cognom;
-    private double nota;
-    private String dataNaixement;
+    private int nota;
 
-    public Alumne(String nom, String cognom, double nota, String dataNaixement) {
+    public Alumne(String nom, String cognom, int nota) {
         this.nom = nom;
         this.cognom = cognom;
         this.nota = nota;
-        this.dataNaixement = dataNaixement;
     }
 
     public String getNom() {
@@ -29,20 +30,12 @@ public class Alumne {
         this.cognom = cognom;
     }
 
-    public double getNota() {
+    public int getNota() {
         return nota;
     }
 
-    public void setNota(double nota) {
+    public void setNota(int nota) {
         this.nota = nota;
-    }
-
-    public String getDataNaixement() {
-        return dataNaixement;
-    }
-
-    public void setNota(String dataNaixement) {
-        this.dataNaixement = dataNaixement;
     }
 
     @Override
@@ -53,4 +46,18 @@ public class Alumne {
                 ", nota=" + nota +
                 '}';
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Alumne alumne = (Alumne) o;
+        return cognom.equals(alumne.cognom);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(cognom);
+    }
+
 }

@@ -1,6 +1,8 @@
-package edu.fje.daw2.projecteM07UF2.model;
+package edu.fje2.daw2.spring1.model;
+
 
 import org.springframework.data.annotation.Id;
+
 /**
  * Classe entitat que representa un client.
  * Es tracta d'una classe del model que es farà persistent

@@ -1,4 +1,4 @@
-package edu.fje.daw2.projecteM07UF2;
+package edu.fje2.daw2.spring1;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

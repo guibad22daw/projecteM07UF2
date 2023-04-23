@@ -6,29 +6,16 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
 </head>
-<body style="margin: 10px">
-    <h1 style="text-align: center; margin: 50px" th:text="'Llistar alumnes ordenats '+${tipusOrdenacio}"></h1>
-    <table class="table table-bordered" style="width: 50%; text-align: center" align="center">
-        <thead>
-            <tr>
-                <th scope="col">Nom</th>
-                <th scope="col">Cognom</th>
-                <th scope="col">Nota</th>
-                <th scope="col">Data naixement</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each="alumne: ${alumnes}">
-                <td th:text="${alumne.nom}">nom</td>
-                <td th:text="${alumne.cognom}">cognom</td>
-                <td th:text="${alumne.nota}">nota</td>
-                <td th:text="${alumne.dataNaixement}">nota</td>
-            </tr>
-        </tbody>
-    </table>
-    <br/>
-    <div style="display: flex; justify-content: center">
-        <a class="btn btn-primary" href="/" role="button" style="font-size: 14px">Tornar al menú principal</a>
-    </div>
+<body>
+<h1>El resultat és</h1>
+<table class="table table-striped-columns">
+    <th>Cognom</th>
+    <th>Nom</th>
+    <th>Nota</th>
+<tr th:each="alumne: ${alumnes}" >
+    <td th:text="${alumne.cognom}"> </td>
+    <td th:text="${alumne.nom}"> </td>
+    <td th:text="${#numbers.formatDecimal(alumne.nota, 1, 2)}"></td>
+</table>
 </body>
 </html>
