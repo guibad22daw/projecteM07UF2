@@ -1,6 +1,5 @@
-package edu.fje2.daw2.spring1;
+package edu.fje2.daw2.spring1.model;
 
-import java.util.Comparator;
 import java.util.Objects;
 
 public class Alumne {

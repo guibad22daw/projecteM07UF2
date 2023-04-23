@@ -1,6 +1,6 @@
 package edu.fje2.daw2.spring1.controladors;
 
-import edu.fje2.daw2.spring1.Alumne;
+import edu.fje2.daw2.spring1.model.Alumne;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;

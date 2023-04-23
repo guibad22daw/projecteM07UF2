@@ -18,7 +18,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .disable()
                 .antMatcher("/**")
                 .authorizeRequests()
-                .antMatchers("/", "/formulari.html", "/spring-logo.svg")
+                .antMatchers("/", "/formulari.html", "/spring-logo.svg", "/assets/**")
                 .permitAll()
                 .anyRequest()
                 .authenticated();
