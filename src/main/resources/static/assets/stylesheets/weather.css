@@ -1,0 +1,68 @@
+body {
+    background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+    background-size: 400% 400%;
+    animation: gradient 15s ease infinite;
+    height: 100%;
+}
+
+.titol {
+    margin: 20px 0 50px 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.titol h1 {
+    color: white;
+    text-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+}
+
+.barra-cercar {
+    display: flex;
+    width: 100%;
+    column-gap: 40px;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin: 0px 0px 50px 0px;
+}
+
+.barra-cercar form{
+    width: 400px;
+}
+
+.barra-cercar input{
+    border-radius: 20px;
+    padding: 10px;
+}
+
+
+.card-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.card {
+    width: 400px;
+    height: 500px;
+    border-radius: 40px;
+    box-shadow: 0 0px 7px 0 rgba(0, 0, 0, 0.1);
+}
+
+@keyframes gradient {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
