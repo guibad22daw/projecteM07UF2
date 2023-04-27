@@ -39,7 +39,6 @@ window.onload = function () {
                 }
 
                 resultats.forEach(suggestion => {
-                    console.log('suggestion', suggestion);
                     const localitzacio = document.createElement("li");
                     localitzacio.value = `${suggestion.name}`;
                     localitzacio.innerHTML = `${suggestion.name}, ${suggestion.admin1}, ${suggestion.country}`;
@@ -62,18 +61,25 @@ window.onload = function () {
         let ciutat = cerca.value;
         const response = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${ciutat}`);
         const data = await response.json();
-        console.log(data);
         getWeather(data.results[0].latitude, data.results[0].longitude);
     };
 
     async function getWeather(lat, lon) {
         const response = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&daily=weathercode,temperature_2m_max&current_weather=true&timezone=auto`);
         const data = await response.json();
-        console.log(data);
+        document.getElementById("nom-ciutat").innerHTML = data.current_weather.weathercode;
         document.getElementById("weather").innerHTML = data.current_weather.weathercode;
+        nouPanellTemps(data);
+    }
+
+    function nouPanellTemps(data) {
+        console.log(data);
+        document.getElementById('nom-ciutat').innerHTML = cerca.value.split(',',1);
         data.current_weather.is_day ? (
             document.getElementById("weather").innerHTML = `<img src="assets/img/weather-icons/weathercode-${data.current_weather.weathercode}.svg" alt="weather">`
             ) : (document.getElementById("weather").innerHTML = `<img src="assets/img/weather-icons/night/weathercode-${data.current_weather.weathercode}.svg" alt="weather">`);
-        document.getElementById("temperature").innerHTML = data.current_weather.temperature;
+        document.getElementById("temperature").innerHTML = data.current_weather.temperature + " ºC";
+        //data.daily.time.forEach();
+        document.getElementById('previsions')
     }
 }
