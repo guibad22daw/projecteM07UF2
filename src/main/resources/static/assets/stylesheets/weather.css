@@ -38,6 +38,28 @@ body {
     padding: 10px;
 }
 
+#suggestions {
+    display: block;
+    z-index: 1;
+    position: absolute;
+    background-color: white;
+    width: 400px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 20px;
+    border: 2px solid grey;
+}
+
+#suggestions li {
+    list-style: none;
+    padding: 5px;
+}
+
+#suggestions li:hover {
+    background-color: rgb(196, 196, 196);
+}
+
 
 .card-container {
     display: flex;
