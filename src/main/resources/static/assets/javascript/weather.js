@@ -78,6 +78,7 @@ window.onload = function () {
         const dataActual = data.current_weather.time;
         const indexOfHoraActual = data.hourly.time.indexOf(dataActual);
         const previsionsHores = data.hourly.time.slice(indexOfHoraActual + 1, indexOfHoraActual + 11);
+        const previsionsDies = data.daily.time;
 
         console.log('previsionsHores', previsionsHores);
         document.getElementById('nom-ciutat').innerHTML = cerca.value.split(',', 1);
@@ -86,6 +87,7 @@ window.onload = function () {
         ) : (document.getElementById("weather").innerHTML = `<img src="assets/img/weather-icons/night/weathercode-${data.current_weather.weathercode}.svg" alt="weather">`);
         document.getElementById("temperatura").innerHTML = `${data.current_weather.temperature} ºC `;
         document.getElementById("humitat").innerHTML = `${data.hourly.relativehumidity_2m[indexOfHoraActual]} %`;
+
         previsionsHores.map((hora, index) => {
             const horaActual = document.createElement("div");
             horaActual.className = "previsioHora";
@@ -100,6 +102,29 @@ window.onload = function () {
             horaActual.innerHTML += `<div class="temperaturaHora">${data.hourly.temperature_2m[indexOfHoraActual + index]} ºC</div>
                                     <div class="humitatHora">${data.hourly.relativehumidity_2m[indexOfHoraActual + index]} %</div></div>`;
             document.getElementById("previsionsHores").appendChild(horaActual);
+        });
+
+        const diesSetmana = ["Diumenge", "Dilluns", "Dimarts", "Dimecres", "Dijous", "Divendres", "Dissabte"];
+        previsionsDies.map((dia, index) => {
+            const dataAAA_MM_DD = new Date(dia.slice(0, 10));
+            const diaSetmana = diesSetmana[dataAAA_MM_DD.getDay()];
+
+            const diaActual = document.createElement("div");
+            diaActual.className = "previsioDia";
+            diaActual.setAttribute("key", `${index}`);
+
+            if (index == 0) diaActual.innerHTML = `<div class="dia">Avui</div>`;
+            else diaActual.innerHTML = `<div class="dia">${diaSetmana}</div>`;
+            diaActual.innerHTML += `<div class="infoDia">
+                                        <div class="iconaDia">
+                                            <img src="assets/img/weather-icons/weathercode-${data.daily.weathercode[index]}.svg" alt="weather" style="width: 40px;">
+                                        </div>
+                                        <div class="climaDia">
+                                            <div class="temperaturaDia">${data.daily.temperature_2m_max[index]} ºC / ${data.daily.temperature_2m_min[index]} ºC</div>
+                                            <div class="humitatDia">${data.daily.precipitation_probability_max[index]} %</div>
+                                        </div>
+                                    </div>`;
+            document.getElementById("previsionsDies").appendChild(diaActual);
         });
 
         //data.daily.time.forEach();
