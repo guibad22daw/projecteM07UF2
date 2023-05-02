@@ -85,7 +85,7 @@ window.onload = function () {
         ) : (document.getElementById("weather").innerHTML = `<img src="assets/img/weather-icons/night/weathercode-${data.current_weather.weathercode}.svg" alt="weather">`);
         document.getElementById("temperatura-i-humitat").innerHTML = `<h5>${data.current_weather.temperature} ºC </h5><h5>${data.hourly.relativehumidity_2m[indexOfHoraActual]} %</h5>`;
 
-        document.getElementById("titol-previsionsHores").innerHTML = `Properes 10 hores:`;
+        document.getElementById("titol-previsionsHores").innerHTML = `Properes 10 hores`;
         document.getElementById("previsionsHores").innerHTML = "";
         previsionsHores.map((hora, index) => {
             const horaActual = document.createElement("div");
@@ -104,7 +104,7 @@ window.onload = function () {
         });
 
         const diesSetmana = ["Diumenge", "Dilluns", "Dimarts", "Dimecres", "Dijous", "Divendres", "Dissabte"];
-        document.getElementById("previsionsDies").innerHTML = "<h6>Propers 7 dies: </h6>";
+        document.getElementById("previsionsDies").innerHTML = "<h6>Propers 7 dies </h6>";
         previsionsDies.map((dia, index) => {
             const dataAAA_MM_DD = new Date(dia.slice(0, 10));
             const diaSetmana = diesSetmana[dataAAA_MM_DD.getDay()];
