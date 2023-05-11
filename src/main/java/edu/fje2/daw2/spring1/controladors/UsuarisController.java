@@ -3,8 +3,9 @@ package edu.fje2.daw2.spring1.controladors;
 import edu.fje2.daw2.spring1.model.Usuari;
 import edu.fje2.daw2.spring1.repositoris.UsuariRepositori;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -16,6 +17,7 @@ public class UsuarisController {
     @Autowired
     private UsuariRepositori repositori;
 
+    /*
     @ModelAttribute("usuaris")
     public List<Usuari> inicialitzar() {
 
@@ -26,12 +28,35 @@ public class UsuarisController {
         return usuaris;
     }
 
-    @RequestMapping(value={"/client", "/usuari"})
+    @RequestMapping(value={"/home", "/usuari"})
     String mostrarFormulari() {
         return("formulari");
     }
+    */
 
-    @RequestMapping(value="/desarUsuari", method = RequestMethod.POST)
+
+    @RequestMapping(value="/home", method = RequestMethod.GET)
+    String mostrarFormulari() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        System.out.println("principal : " + authentication.getPrincipal());
+
+        String username = authentication.getPrincipal().toString()
+                .substring(authentication.getPrincipal().toString().indexOf("username=") + 9);
+
+        String mail = authentication.getPrincipal().toString()
+                .substring(authentication.getPrincipal().toString().indexOf("email=") + 6);
+
+        System.out.println("username = " + username);
+        System.out.println("email = " + mail);
+        System.out.println(authentication.getDetails());
+
+        Usuari nouUsuari = new Usuari(username, mail, null);
+        repositori.save(nouUsuari);
+
+        return("home");
+    }
+
+    /* @RequestMapping(value="/desarUsuari", method = RequestMethod.POST)
     String desarClient(@SessionAttribute("clients") List<Usuari> clients,
                        @RequestParam(defaultValue = "") String nom,
                        @RequestParam (defaultValue = "") String cognom,
@@ -48,12 +73,12 @@ public class UsuarisController {
     }
 
     @RequestMapping(value="/esborrarClient", method = RequestMethod.GET)
-    String esborrarClient(@SessionAttribute("clients") List<Client> clients, @RequestParam (defaultValue = "") String id) {
+    String esborrarClient(@SessionAttribute("clients") List<Usuari> clients, @RequestParam (defaultValue = "") String id) {
 
         System.out.println(id);
 
         repositori.deleteById(id);
-        Client t = new Client();
+        Usuari t = new Usuari();
         t.setId(id);
         clients.remove(t);
 
@@ -62,9 +87,9 @@ public class UsuarisController {
 
     @RequestMapping(value="/mostrarClients", method = RequestMethod.GET)
     void mostrarClients(){
-        List <Client> client = new ArrayList<Client>();
-        for (Client c : repositori.findByCognom("Grau")) {
+        List <Usuari> client = new ArrayList<Usuari>();
+        for (Usuari c : repositori.findByCognom("Grau")) {
             System.out.println(c);
         }
-    }
+    } */
 }

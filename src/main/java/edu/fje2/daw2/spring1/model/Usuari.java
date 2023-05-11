@@ -4,16 +4,18 @@ import java.util.List;
 
 public class Usuari {
 
+    private String username;
+
     private String mail;
-    private String id;
+
     private List<Ciutat> ciutats;
 
     public Usuari() {
     }
 
-    public Usuari(String mail, String id, List<Ciutat> ciutats) {
+    public Usuari(String mail, String username, List<Ciutat> ciutats) {
         this.mail = mail;
-        this.id = id;
+        this.username = username;
         this.ciutats = ciutats;
     }
 
@@ -25,12 +27,12 @@ public class Usuari {
         this.mail = mail;
     }
 
-    public String getId() {
-        return id;
+    public String getUsername() {
+        return username;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public List<Ciutat> getCiutats() {

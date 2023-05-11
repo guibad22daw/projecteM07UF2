@@ -10,9 +10,6 @@ import java.util.List;
  * @version  1.0 4.4.2019
  */
 public interface UsuariRepositori extends MongoRepository<Usuari, String> {
-
-    Usuari findByNom(String nom);
-    List<Usuari> findByCognom(String cognom);
-    List<Usuari> findByVolumCompres(int volumCompres);
-
+    Usuari findByUsername(String username);
+    List<Usuari> findByMail(String mail);
 }
