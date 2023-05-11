@@ -7,6 +7,10 @@ window.onload = function () {
             const user_lat = position.coords.latitude;
             const user_lon = position.coords.longitude;
             console.log(user_lat, user_lon);
+            const response = await fetch(`https://nominatim.openstreetmap.org/reverse?lat=41.39&lon=2.17&format=json`);
+            const data = await response.json();
+            document.getElementById('nom-ciutat').innerHTML = `${data.address.city}`;
+
             getWeather(user_lat, user_lon);
         });
     } else {
@@ -90,8 +94,10 @@ window.onload = function () {
         const indexOfHoraActual = data.hourly.time.indexOf(dataActual);
         const previsionsHores = data.hourly.time.slice(indexOfHoraActual + 1, indexOfHoraActual + 11);
         const previsionsDies = data.daily.time;
-
-        document.getElementById('nom-ciutat').innerHTML = cerca.value.split(',', 1);
+        
+        if(cerca.value.length != 0) {
+            document.getElementById('nom-ciutat').innerHTML = cerca.value.split(',', 1);
+        }  
         data.current_weather.is_day ? (
             document.getElementById("weather").innerHTML = `<img src="assets/img/weather-icons/weathercode-${data.current_weather.weathercode}.svg" alt="weather">`
         ) : (document.getElementById("weather").innerHTML = `<img src="assets/img/weather-icons/night/weathercode-${data.current_weather.weathercode}.svg" alt="weather">`);
