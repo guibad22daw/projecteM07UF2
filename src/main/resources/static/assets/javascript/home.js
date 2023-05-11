@@ -2,6 +2,17 @@ window.onload = function () {
     const suggestions = document.getElementById("suggestions");
     const cerca = document.getElementById('cerca');
 
+    if ('geolocation' in navigator) {
+        navigator.geolocation.getCurrentPosition(async (position) => {
+            const user_lat = position.coords.latitude;
+            const user_lon = position.coords.longitude;
+            console.log(user_lat, user_lon);
+            getWeather(user_lat, user_lon);
+        });
+    } else {
+        console.log('La geolocalització no está disponible');
+    }
+
     document.onmousedown = function () {
         const isClickInsideSuggestions = suggestions.contains(event.target);
         const isClickInsideCerca = cerca.contains(event.target);
@@ -27,10 +38,12 @@ window.onload = function () {
             }
             return;
         }
+        getCiutat(value);
+    };
 
+    async function getCiutat(cadena) {
         try {
-            const response = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${value}`);
-
+            const response = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${cadena}`);
             if (response.ok) {
                 const data = await response.json();
                 const resultats = data.results;
@@ -55,7 +68,7 @@ window.onload = function () {
         } catch (err) {
             console.log('err :>> ', err);
         }
-    };
+    }
 
     document.getElementById('formCerca').onsubmit = async function (e) {
         e.preventDefault();
@@ -68,8 +81,7 @@ window.onload = function () {
     async function getWeather(lat, lon) {
         const response = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&hourly=temperature_2m,relativehumidity_2m,precipitation_probability,weathercode,is_day&daily=weathercode,temperature_2m_max,temperature_2m_min,precipitation_probability_max&current_weather=true&timezone=auto`);
         const data = await response.json();
-        document.getElementById("nom-ciutat").innerHTML = data.current_weather.weathercode;
-        document.getElementById("weather").innerHTML = data.current_weather.weathercode;
+        console.log(data)
         nouPanellTemps(data);
     }
 
@@ -114,7 +126,7 @@ window.onload = function () {
             diaActual.setAttribute("key", `${index}`);
 
             diaActual.innerHTML = `<div class="dia">
-                                        <p>${ index == 0 ? "Avui" : diaSetmana}</p>
+                                        <p>${index == 0 ? "Avui" : diaSetmana}</p>
                                         <div class="icona-precipitacions">
                                             <div class="iconaDia"><img src="assets/img/weather-icons/weathercode-${data.daily.weathercode[index]}.svg" alt="weather" style="width: 40px;"></div>
                                             <div class="precipitacions">${data.daily.precipitation_probability_max[index]} % <img src="assets/img/water-rain-drop-png.png" alt="precipitation_probability" style="width: 30px;"/></div>
@@ -131,4 +143,4 @@ window.onload = function () {
         //data.daily.time.forEach();
         document.getElementById('previsions')
     }
-}
+} 
