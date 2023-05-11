@@ -12,13 +12,16 @@ p {
 
 body {
     background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
-    background-size: 100% 150%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
     height: 100%;
     font-family: 'Poppins', sans-serif;
 }
 
 .titol {
-    margin: 20px 0 35px 0;
+    margin: 20px 0 30px 0;
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -38,7 +41,7 @@ body {
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    margin: 0px 0px 50px 0px;
+    margin: 0px 0px 40px 0px;
 }
 
 .barra-cercar form {
@@ -88,7 +91,7 @@ body {
     flex-direction: row;
     justify-content: space-between;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-    margin-left: 50px;
+    margin-left: 68px;
 }
 
 .card-content-1 {
@@ -259,6 +262,72 @@ body {
 .boto svg:hover {
     fill: black;
     transition: 0.3s;
+}
+
+
+.home-icon {
+    font-variation-settings:
+        'FILL' 1,
+        'wght' 400,
+        'GRAD' 0,
+        'opsz' 48
+}
+
+.navbar-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    height: 100%;
+}
+
+.navbar {
+    background-color: white;
+    border-radius: 20px;
+    width: 110px;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-top: 27px
+}
+
+.navbar a {
+    text-decoration: none;
+    color: black;
+}
+
+.home-icon-container,
+.favorits-icon-container {
+    border-radius: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0px 3px 0px 3px;
+}
+
+.home-icon-container:hover,
+.favorits-icon-container:hover {
+    cursor: pointer;
+    background-color: rgb(231, 231, 231);
+
+}
+
+.home-icon-container {
+    background-color: rgb(231, 231, 231);
+}
+
+.navbar span {
+    font-size: 37px;
+    margin: 3px;
+}
+
+.favorits-icon:active {
+    font-variation-settings:
+        'FILL' 1,
+        'wght' 400,
+        'GRAD' 0,
+        'opsz' 48
 }
 
 @keyframes gradient {
