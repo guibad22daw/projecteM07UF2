@@ -14,7 +14,7 @@ window.onload = function () {
             getWeather(user_lat, user_lon);
         });
     } else {
-        console.log('La geolocalització no está disponible');
+        console.log('La geolocalització no està disponible.');
     }
 
     document.onmousedown = function () {
@@ -95,11 +95,11 @@ window.onload = function () {
             longitud: lon
         };
         localStorage.setItem('ciutat', JSON.stringify(novaCiutat));
-        console.log(data)
         nouPanellTemps(data);
     }
 
     function nouPanellTemps(data) {
+        document.getElementById("afegir").classList.remove("actiu");
         comprovaCiutatFavorita();
         const dataActual = data.current_weather.time;
         const indexOfHoraActual = data.hourly.time.indexOf(dataActual);
@@ -195,12 +195,10 @@ window.onload = function () {
         const ciutats = await response.json();
 
         ciutats.forEach(ciutat => {
-            console.log('ciutat', ciutat);
-            if(ciutat.nom == "Madrid") {
-                console.log('ciutat.nom', ciutat.nom);
+            const ciutatNom = ciutat.nom;
+            if(cerca.value.includes(ciutatNom)) {
+                console.log('cerca.value', cerca.value);
                 document.getElementById("afegir").classList.add("actiu");
-            } else {
-                document.getElementById("afegir").classList.remove("actiu");
             }
         });
     }
