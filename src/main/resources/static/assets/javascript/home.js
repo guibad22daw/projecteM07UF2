@@ -9,6 +9,7 @@ window.onload = function () {
             const response = await fetch(`https://nominatim.openstreetmap.org/reverse?lat=41.39&lon=2.17&format=json`);
             const data = await response.json();
             document.getElementById('nom-ciutat').innerHTML = `${data.address.city}`;
+            localStorage.setItem("ciutatUsuari",data.address.city);
 
             getWeather(user_lat, user_lon);
         });
@@ -89,7 +90,7 @@ window.onload = function () {
         const data = await response.json();
         const ciutatArray = cerca.value.split(',', 1)
         const novaCiutat = {
-            nom: ciutatArray[0],
+            nom: ciutatArray[0] || localStorage.getItem("ciutatUsuari"),
             latitud: lat,
             longitud: lon
         };
@@ -192,10 +193,12 @@ window.onload = function () {
             },
         });
         const ciutats = await response.json();
+        console.log(ciutats);
 
         ciutats.forEach(ciutat => {
             const ciutatNom = ciutat.nom;
-            if(cerca.value.includes(ciutatNom)) {
+            if(cerca.value.includes(ciutatNom) || localStorage.getItem('ciutatUsuari').includes(ciutatNom)) {
+                localStorage.setItem('ciutatUsuari',"");
                 console.log('cerca.value', cerca.value);
                 document.getElementById("afegir").classList.add("actiu");
             }
