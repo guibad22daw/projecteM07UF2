@@ -22,21 +22,16 @@
         <h1>TheWeatherClot</h1>
     </div>
     <div class="content-container">
-        <div class="barra-cercar">
-            <form id="formCerca">
-                <input type="text" id="cerca" class="form-control" placeholder="Busca una ciutat" autocomplete="off"
-                    required>
-                <div id="suggestions"></div>
-            </form>
-        </div>
         <div class="card-container">
             <swiper-container class="mySwiper card-container" navigation="true">
-                <swiper-slide class="card-container">
+                <swiper-slide class="card-container" th:each="ciutat: ${ciutats}">
                     <div class="card">
                         <div class="card-content-1">
                             <div id="weather"></div>
                             <div id="ciutat-temperatura">
-                                <h4 id="nom-ciutat"></h4>
+                                <h4 id="nom-ciutat" th:text="${ciutat.nom}"></h4>
+                                <label id="lat" th:text="${ciutat.latitud}" style="display: none;"></label>
+                                <label id="lon" th:text="${ciutat.longitud}" style="display: none;"></label>
                                 <div id="temperatura-i-humitat"></div>
                             </div>
                             <h6 id="titol-previsionsHores"></h6>
@@ -65,40 +60,7 @@
                         </div>
                     </div>
                 </swiper-slide>
-                <swiper-slide class="card-container">
-                    <div class="card">
-                        <div class="card-content-1">
-                            <div id="weather"></div>
-                            <div id="ciutat-temperatura">
-                                <h4 id="nom-ciutat"></h4>
-                                <div id="temperatura-i-humitat"></div>
-                            </div>
-                            <h6 id="titol-previsionsHores"></h6>
-                            <div id="previsionsHores"></div>
-                        </div>
-                        <div class="card-content-2">
-                            <div id="previsionsDies"></div>
-                        </div>
-                    </div>
-                    <div class="botoAfegir">
-                        <div class="boto" id="boto">
-                            <svg id="afegir" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
-                                <g id="SVGRepo_iconCarrier">
-                                    <g id="Interface / Heart_01">
-                                        <path id="Vector"
-                                            d="M12 7.69431C10 2.99988 3 3.49988 3 9.49991C3 15.4999 12 20.5001 12 20.5001C12 20.5001 21 15.4999 21 9.49991C21 3.49988 14 2.99988 12 7.69431Z"
-                                            stroke="#000000" stroke-width="2" stroke-linecap="round"
-                                            stroke-linejoin="round" data-darkreader-inline-stroke=""
-                                            style="--darkreader-inline-stroke: #d8d6d3;">
-                                        </path>
-                                    </g>
-                                </g>
-                            </svg>
-                        </div>
-                    </div>
-                </swiper-slide>
+            </swiper-container>
         </div>
         <div th:include="footer_plantilla :: footer"></div>
     </div>

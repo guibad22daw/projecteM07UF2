@@ -9,13 +9,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-@SessionAttributes("usuaris")
 public class UsuarisController {
     @Autowired
     private UsuariRepositori repositori;
@@ -38,7 +38,6 @@ public class UsuarisController {
     */
 
 
-    @ModelAttribute("clients")
     @RequestMapping(value="/home", method = RequestMethod.GET)
     String desaUsuari() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -58,23 +57,15 @@ public class UsuarisController {
         return("home");
     }
 
-    @ModelAttribute("clients")
-    @RequestMapping(value="/favorits", method = RequestMethod.GET)
-    String getFavorits() {
+    @GetMapping(value="/favorits")
+    String getFavorits(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getPrincipal().toString().substring(authentication.getPrincipal().toString().indexOf("username=") + 9);
-        String mail = authentication.getPrincipal().toString().substring(authentication.getPrincipal().toString().indexOf("email=") + 6);
 
-        boolean existeix = repositori.existsByUsername(username);
-        if (!existeix) {
-            Usuari nouUsuari = new Usuari(username, mail, new ArrayList<>());
-            repositori.save(nouUsuari);
-            System.out.println("Nou usuari creat");
-        }
-        else {
-            System.out.println("Usuari ja existent. Id = " + username);
-        }
+        Usuari usuari = repositori.findByUsername(username);
+        List<Ciutat> ciutats = usuari.getCiutats();
 
+        model.addAttribute("ciutats", ciutats);
         return("favorits");
     }
 
