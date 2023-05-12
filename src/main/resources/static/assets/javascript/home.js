@@ -99,6 +99,7 @@ window.onload = function () {
     }
 
     function nouPanellTemps(data) {
+        comprovaCiutatFavorita();
         const dataActual = data.current_weather.time;
         const indexOfHoraActual = data.hourly.time.indexOf(dataActual);
         const previsionsHores = data.hourly.time.slice(indexOfHoraActual + 1, indexOfHoraActual + 11);
@@ -174,7 +175,7 @@ window.onload = function () {
                 'Content-Type': 'application/json'
             },
             body: novaCiutat,
-        }).then(response => { 
+        }).then(response => {
             if (response.ok) {
                 console.log('Petició efectuada correctament.');
             } else {
@@ -182,4 +183,24 @@ window.onload = function () {
             }
         });
     });
+
+    async function comprovaCiutatFavorita() {
+        const response = await fetch('/getCiutats', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        });
+        const ciutats = await response.json();
+
+        ciutats.forEach(ciutat => {
+            console.log('ciutat', ciutat);
+            if(ciutat.nom == "Madrid") {
+                console.log('ciutat.nom', ciutat.nom);
+                document.getElementById("afegir").classList.add("actiu");
+            } else {
+                document.getElementById("afegir").classList.remove("actiu");
+            }
+        });
+    }
 } 

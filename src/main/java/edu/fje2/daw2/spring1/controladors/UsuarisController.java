@@ -113,6 +113,25 @@ public class UsuarisController {
         return ResponseEntity.ok().build();
     }
 
+    @GetMapping("/getCiutats")
+    @ResponseBody
+    public List<Ciutat> getCiutats() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getPrincipal().toString().substring(authentication.getPrincipal().toString().indexOf("username=") + 9);
+
+        Usuari usuari = repositori.findByUsername(username);
+        if (usuari == null) {
+            return null;
+        }
+
+        List<Ciutat> ciutats = usuari.getCiutats();
+        if (ciutats == null) {
+            return null;
+        }
+        System.out.println(ciutats);
+        return ciutats;
+    }
+
     /*
     @RequestMapping(value="/esborrarClient", method = RequestMethod.GET)
     String esborrarClient(@SessionAttribute("clients") List<Usuari> clients, @RequestParam (defaultValue = "") String id) {
