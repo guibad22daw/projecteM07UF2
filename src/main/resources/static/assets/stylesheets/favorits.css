@@ -1,0 +1,283 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap');
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+    margin: 0;
+}
+
+body {
+    background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    height: 100%;
+    font-family: 'Poppins', sans-serif;
+}
+
+.titol {
+    margin: 20px 0 30px 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.titol h1 {
+    color: white;
+    text-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+}
+
+.barra-cercar {
+    display: flex;
+    width: 100%;
+    column-gap: 40px;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin: 0px 0px 40px 0px;
+}
+
+.barra-cercar form {
+    width: 400px;
+}
+
+.barra-cercar input {
+    border-radius: 20px;
+    padding: 10px;
+}
+
+#suggestions {
+    display: block;
+    z-index: 1;
+    position: absolute;
+    background-color: white;
+    width: 400px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 20px;
+    border: 1px solid grey;
+}
+
+#suggestions li {
+    list-style: none;
+    padding: 5px;
+}
+
+#suggestions li:hover {
+    background-color: rgb(196, 196, 196);
+}
+
+.card-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.card {
+    width: 1100px;
+    display: flex;
+    height: 650px;
+    border-radius: 30px;
+    box-shadow: 0 0px 10px 0 rgba(0, 0, 0, 0.1);
+    flex-direction: row;
+    justify-content: space-between;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+    margin-left: 68px;
+}
+
+.card-content-1 {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.card-content-2 {
+    background-color: rgb(236, 236, 236);
+    border-top-right-radius: inherit;
+    border-bottom-right-radius: inherit;
+    width: 50%;
+    height: 100%;
+}
+
+#weather {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+#weather img {
+    width: 50%;
+}
+
+#ciutat-temperatura {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    row-gap: 5px;
+    align-items: center;
+}
+
+#temperatura-i-humitat {
+    display: flex;
+    justify-content: space-between;
+    column-gap: 50px;
+}
+
+#previsionsHores {
+    padding: 10px;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-gap: 10px
+}
+
+.previsioHora {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 20px;
+    background-color: rgb(248, 248, 248);
+}
+
+#titol-previsionsHores {
+    margin-left: 10px;
+    margin-top: 7.5px;
+}
+
+.humitatHora {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row-reverse;
+}
+
+#previsionsDies {
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    row-gap: 10px;
+}
+
+.previsioDia {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    border-radius: 20px;
+    background-color: rgb(248, 248, 248);
+    justify-content: space-between;
+    padding: 0px 10px 0px 10px;
+}
+
+.climaDia {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.dia {
+    display: flex;
+    flex-direction: column;
+}
+
+.climaDia {
+    display: flex;
+    flex-direction: column;
+}
+
+.icona-precipitacions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    column-gap: 20px;
+}
+
+.temperaturaDia {
+    font-size: 18px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.precipitacions {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    column-gap: 2px;
+}
+
+.max-temp {
+    color: rgb(219 0 0);
+}
+
+.min-temp {
+    color: rgb(59, 131, 255);
+}
+
+.boto {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    background-color: white;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    margin-top: -320px;
+    margin-left: 20px;
+}
+
+.boto:hover {
+    cursor: pointer;
+    background-color: rgb(236, 236, 236);
+}
+
+.boto svg {
+    width: 25px;
+    transition: 0.3s;
+}
+
+.boto svg:hover {
+    fill: black;
+    transition: 0.3s;
+}
+
+.boto svg.actiu {
+    fill: black;
+}
+
+@keyframes gradient {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}

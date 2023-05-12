@@ -58,6 +58,26 @@ public class UsuarisController {
         return("home");
     }
 
+    @ModelAttribute("clients")
+    @RequestMapping(value="/favorits", method = RequestMethod.GET)
+    String getFavorits() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getPrincipal().toString().substring(authentication.getPrincipal().toString().indexOf("username=") + 9);
+        String mail = authentication.getPrincipal().toString().substring(authentication.getPrincipal().toString().indexOf("email=") + 6);
+
+        boolean existeix = repositori.existsByUsername(username);
+        if (!existeix) {
+            Usuari nouUsuari = new Usuari(username, mail, new ArrayList<>());
+            repositori.save(nouUsuari);
+            System.out.println("Nou usuari creat");
+        }
+        else {
+            System.out.println("Usuari ja existent. Id = " + username);
+        }
+
+        return("favorits");
+    }
+
     @PostMapping(value="/desaCiutat")
     public ResponseEntity<?> desaCiutat(@RequestBody Ciutat ciutat) {
         System.out.println(ciutat);
