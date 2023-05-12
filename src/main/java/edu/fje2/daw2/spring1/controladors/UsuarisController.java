@@ -35,23 +35,22 @@ public class UsuarisController {
     */
 
 
+    @ModelAttribute("clients")
     @RequestMapping(value="/home", method = RequestMethod.GET)
-    String mostrarFormulari() {
+    String desaUsuari() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        System.out.println("principal : " + authentication.getPrincipal());
+        String username = authentication.getPrincipal().toString().substring(authentication.getPrincipal().toString().indexOf("username=") + 9);
+        String mail = authentication.getPrincipal().toString().substring(authentication.getPrincipal().toString().indexOf("email=") + 6);
 
-        String username = authentication.getPrincipal().toString()
-                .substring(authentication.getPrincipal().toString().indexOf("username=") + 9);
-
-        String mail = authentication.getPrincipal().toString()
-                .substring(authentication.getPrincipal().toString().indexOf("email=") + 6);
-
-        System.out.println("username = " + username);
-        System.out.println("email = " + mail);
-        System.out.println(authentication.getDetails());
-
-        Usuari nouUsuari = new Usuari(username, mail, null);
-        repositori.save(nouUsuari);
+        boolean existeix = repositori.existsByUsername(username);
+        if (!existeix) {
+            Usuari nouUsuari = new Usuari(username, mail, null);
+            repositori.save(nouUsuari);
+            System.out.println("Nou usuari creat");
+        }
+        else {
+            System.out.println("Usuari ja existent. Id = " + username);
+        }
 
         return("home");
     }
