@@ -6,7 +6,6 @@ window.onload = function () {
         navigator.geolocation.getCurrentPosition(async (position) => {
             const user_lat = position.coords.latitude;
             const user_lon = position.coords.longitude;
-            console.log(user_lat, user_lon);
             const response = await fetch(`https://nominatim.openstreetmap.org/reverse?lat=41.39&lon=2.17&format=json`);
             const data = await response.json();
             document.getElementById('nom-ciutat').innerHTML = `${data.address.city}`;
@@ -76,15 +75,25 @@ window.onload = function () {
 
     document.getElementById('formCerca').onsubmit = async function (e) {
         e.preventDefault();
-        let ciutat = cerca.value;
+        ciutat = cerca.value;
         const response = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${ciutat}`);
         const data = await response.json();
-        getWeather(data.results[0].latitude, data.results[0].longitude);
+        lat = data.results[0].latitude;
+        lon = data.results[0].longitude;
+        
+        getWeather(lat, lon);
     };
 
     async function getWeather(lat, lon) {
         const response = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&hourly=temperature_2m,relativehumidity_2m,precipitation_probability,weathercode,is_day&daily=weathercode,temperature_2m_max,temperature_2m_min,precipitation_probability_max&current_weather=true&timezone=auto`);
         const data = await response.json();
+        const ciutatArray = cerca.value.split(',', 1)
+        const novaCiutat = {
+            nom: ciutatArray[0],
+            lat: lat,
+            lon: lon
+        };
+        localStorage.setItem('ciutat', JSON.stringify(novaCiutat));
         console.log(data)
         nouPanellTemps(data);
     }
@@ -94,10 +103,10 @@ window.onload = function () {
         const indexOfHoraActual = data.hourly.time.indexOf(dataActual);
         const previsionsHores = data.hourly.time.slice(indexOfHoraActual + 1, indexOfHoraActual + 11);
         const previsionsDies = data.daily.time;
-        
-        if(cerca.value.length != 0) {
+
+        if (cerca.value.length != 0) {
             document.getElementById('nom-ciutat').innerHTML = cerca.value.split(',', 1);
-        }  
+        }
         data.current_weather.is_day ? (
             document.getElementById("weather").innerHTML = `<img src="assets/img/weather-icons/weathercode-${data.current_weather.weathercode}.svg" alt="weather">`
         ) : (document.getElementById("weather").innerHTML = `<img src="assets/img/weather-icons/night/weathercode-${data.current_weather.weathercode}.svg" alt="weather">`);
@@ -145,8 +154,11 @@ window.onload = function () {
                                     </div>`;
             document.getElementById("previsionsDies").appendChild(diaActual);
         });
-
-        //data.daily.time.forEach();
-        document.getElementById('previsions')
     }
+
+    document.getElementById("boto").addEventListener("click", async () => {
+        const novaCiutat =  localStorage.getItem('ciutat');
+        console.log(novaCiutat);
+        // TO DO: fer el fetch al backend de Spring per guardar la ciutat
+    });
 } 

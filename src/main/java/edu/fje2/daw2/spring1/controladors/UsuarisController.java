@@ -71,6 +71,7 @@ public class UsuarisController {
         return("llistarClients");
     }
 
+    /*
     @RequestMapping(value="/esborrarClient", method = RequestMethod.GET)
     String esborrarClient(@SessionAttribute("clients") List<Usuari> clients, @RequestParam (defaultValue = "") String id) {
 
