@@ -1,8 +1,11 @@
 package edu.fje2.daw2.spring1.controladors;
 
+import edu.fje2.daw2.spring1.model.Ciutat;
 import edu.fje2.daw2.spring1.model.Usuari;
 import edu.fje2.daw2.spring1.repositoris.UsuariRepositori;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -44,7 +47,7 @@ public class UsuarisController {
 
         boolean existeix = repositori.existsByUsername(username);
         if (!existeix) {
-            Usuari nouUsuari = new Usuari(username, mail, null);
+            Usuari nouUsuari = new Usuari(username, mail, new ArrayList<>());
             repositori.save(nouUsuari);
             System.out.println("Nou usuari creat");
         }
@@ -55,20 +58,30 @@ public class UsuarisController {
         return("home");
     }
 
-    /* @RequestMapping(value="/desarUsuari", method = RequestMethod.POST)
-    String desarClient(@SessionAttribute("clients") List<Usuari> clients,
-                       @RequestParam(defaultValue = "") String nom,
-                       @RequestParam (defaultValue = "") String cognom,
-                       @RequestParam (defaultValue = "") int volumCompres,
-                       ModelMap model){
-        Usuari c = new Usuari(nom, cognom, volumCompres);
-        repositori.save(c);
+    @PostMapping(value="/desaCiutat")
+    public ResponseEntity<?> desaCiutat(@RequestBody Ciutat ciutat) {
+        System.out.println(ciutat);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getPrincipal().toString().substring(authentication.getPrincipal().toString().indexOf("username=") + 9);
 
-        if(!model.containsAttribute("clients")) {
-            model.addAttribute("clients", clients);
+        Usuari usuari = repositori.findByUsername(username);
+
+        if (usuari == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No se encontró el usuario");
         }
-        clients.add(c);
-        return("llistarClients");
+
+        List<Ciutat> ciutats = usuari.getCiutats();
+        if (ciutats == null) {
+            ciutats = new ArrayList<>();
+        }
+
+        Ciutat novaCiutat = new Ciutat(ciutat.getNom(), ciutat.getLatitud(), ciutat.getLongitud());
+        ciutats.add(novaCiutat);
+
+        usuari.setCiutats(ciutats);
+        repositori.save(usuari);
+
+        return ResponseEntity.ok().build();
     }
 
     /*

@@ -1,14 +1,17 @@
 package edu.fje2.daw2.spring1.model;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class Ciutat {
     private String nom;
-    private double latitud;
-    private double longitud;
+    private Double latitud;
+    private Double longitud;
 
     public Ciutat() {
     }
 
-    public Ciutat(String nom, double latitud, double longitud) {
+    public Ciutat(String nom, Double latitud, Double longitud) {
         this.nom = nom;
         this.latitud = latitud;
         this.longitud = longitud;
@@ -22,19 +25,28 @@ public class Ciutat {
         this.nom = nom;
     }
 
-    public double getLatitud() {
+    public Double getLatitud() {
         return latitud;
     }
 
-    public void setLatitud(double latitud) {
+    public void setLatitud(Double latitud) {
         this.latitud = latitud;
     }
 
-    public double getLongitud() {
+    public Double getLongitud() {
         return longitud;
     }
 
-    public void setLongitud(double longitud) {
+    public void setLongitud(Double longitud) {
         this.longitud = longitud;
+    }
+
+    @Override
+    public String toString() {
+        return "Ciutat{" +
+                "nom='" + nom + '\'' +
+                ", latitud=" + latitud +
+                ", longitud=" + longitud +
+                '}';
     }
 }

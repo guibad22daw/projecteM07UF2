@@ -1,10 +1,12 @@
 package edu.fje2.daw2.spring1.model;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.util.List;
 
 public class Usuari {
+    @Id
     private String username;
 
     private String mail;

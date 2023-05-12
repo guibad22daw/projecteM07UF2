@@ -90,8 +90,8 @@ window.onload = function () {
         const ciutatArray = cerca.value.split(',', 1)
         const novaCiutat = {
             nom: ciutatArray[0],
-            lat: lat,
-            lon: lon
+            latitud: lat,
+            longitud: lon
         };
         localStorage.setItem('ciutat', JSON.stringify(novaCiutat));
         console.log(data)
@@ -160,5 +160,18 @@ window.onload = function () {
         const novaCiutat =  localStorage.getItem('ciutat');
         console.log(novaCiutat);
         // TO DO: fer el fetch al backend de Spring per guardar la ciutat
+        fetch('/desaCiutat', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: novaCiutat,
+        }).then(response => {
+            if (response.ok) {
+                console.log('Ciutat desada correctament');
+            } else {
+                console.log('Error al desar la ciutat');
+            }
+        });
     });
 } 
