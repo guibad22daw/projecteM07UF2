@@ -193,10 +193,12 @@ window.onload = function () {
             },
         });
         const ciutats = await response.json();
+        console.log(ciutats);
 
         ciutats.forEach(ciutat => {
             const ciutatNom = ciutat.nom;
-            if(cerca.value.includes(ciutatNom)) {
+            if(cerca.value.includes(ciutatNom) || localStorage.getItem('ciutatUsuari').includes(ciutatNom)) {
+                localStorage.setItem('ciutatUsuari',"");
                 console.log('cerca.value', cerca.value);
                 document.getElementById("afegir").classList.add("actiu");
             }
