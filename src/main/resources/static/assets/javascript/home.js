@@ -80,7 +80,7 @@ window.onload = function () {
         const data = await response.json();
         lat = data.results[0].latitude;
         lon = data.results[0].longitude;
-        
+
         getWeather(lat, lon);
     };
 
@@ -157,20 +157,28 @@ window.onload = function () {
     }
 
     document.getElementById("boto").addEventListener("click", async () => {
-        const novaCiutat =  localStorage.getItem('ciutat');
-        console.log(novaCiutat);
-        // TO DO: fer el fetch al backend de Spring per guardar la ciutat
-        fetch('/desaCiutat', {
+        let url = "";
+
+        if (document.getElementById("afegir").classList.contains("actiu")) {
+            document.getElementById("afegir").classList.remove("actiu");
+            url = "/esborraCiutat";
+        } else {
+            document.getElementById("afegir").classList.add("actiu");
+            url = "/desaCiutat";
+        }
+
+        const novaCiutat = localStorage.getItem('ciutat');
+        fetch(url, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: novaCiutat,
-        }).then(response => {
+        }).then(response => { 
             if (response.ok) {
-                console.log('Ciutat desada correctament');
+                console.log('Petició efectuada correctament.');
             } else {
-                console.log('Error al desar la ciutat');
+                console.log("Error al efectuar la petició.");
             }
         });
     });

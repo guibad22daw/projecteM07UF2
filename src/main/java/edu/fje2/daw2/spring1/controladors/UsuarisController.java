@@ -67,7 +67,7 @@ public class UsuarisController {
         Usuari usuari = repositori.findByUsername(username);
 
         if (usuari == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No se encontró el usuario");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Aquest usuari no existeix.");
         }
 
         List<Ciutat> ciutats = usuari.getCiutats();
@@ -77,6 +77,35 @@ public class UsuarisController {
 
         Ciutat novaCiutat = new Ciutat(ciutat.getNom(), ciutat.getLatitud(), ciutat.getLongitud());
         ciutats.add(novaCiutat);
+
+        usuari.setCiutats(ciutats);
+        repositori.save(usuari);
+
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping(value="/esborraCiutat")
+    public ResponseEntity<?> esborraCiutat(@RequestBody Ciutat ciutat) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getPrincipal().toString().substring(authentication.getPrincipal().toString().indexOf("username=") + 9);
+
+        Usuari usuari = repositori.findByUsername(username);
+        if (usuari == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Aquest usuari no existeix.");
+        }
+
+        List<Ciutat> ciutats = usuari.getCiutats();
+        if (ciutats == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No hi ha cap ciutat a esborrar.");
+        }
+
+        for (Ciutat ciutatUsuari : ciutats) {
+            if (ciutatUsuari.getNom().equals(ciutat.getNom())) {
+                System.out.println("Ciutat a esborrar: " + ciutatUsuari);
+                ciutats.remove(ciutatUsuari);
+                break;
+            }
+        }
 
         usuari.setCiutats(ciutats);
         repositori.save(usuari);

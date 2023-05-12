@@ -264,6 +264,10 @@ body {
     transition: 0.3s;
 }
 
+.boto svg.actiu{
+    fill: black;
+}
+
 
 .home-icon {
     font-variation-settings:
