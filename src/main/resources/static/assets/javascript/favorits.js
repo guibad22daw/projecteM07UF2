@@ -2,15 +2,7 @@ import navbarHandler from "./navbar.js";
 
 window.onload = function () {
     navbarHandler();
-    const location = window.location.pathname;
-
-    document.getElementById("favorits-icon").addEventListener("click", () => {
-        document.getElementById("favorits-icon").classList.add("actiu");
-    });
-
-    document.getElementById("home-icon").addEventListener("click", () => {
-        document.getElementById("home-icon").classList.add("actiu");
-    });
+    document.getElementById("card-content").style.opacity = "0";
 
     if (location === "/home") {
         document.getElementById("favorits-icon").classList.remove("actiu");
@@ -43,8 +35,6 @@ window.onload = function () {
     }
 
     function nouPanellTemps(data, card, ciutat) {
-        // card.querySelector("#afegir").classList.remove("actiu");
-        // comprovaCiutatFavorita();
         const dataActual = data.current_weather.time;
         const indexOfHoraActual = data.hourly.time.indexOf(dataActual);
         const previsionsHores = data.hourly.time.slice(indexOfHoraActual + 1, indexOfHoraActual + 11);
@@ -97,6 +87,8 @@ window.onload = function () {
                                         </div>
                                     </div>`;
             card.querySelector("#previsionsDies").appendChild(diaActual);
+            document.getElementById("card-content").style.opacity = "1";
+            document.getElementById("card-content").style.transitionDuration = "1s";
         });
     }
 

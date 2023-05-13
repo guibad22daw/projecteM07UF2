@@ -4,6 +4,7 @@ window.onload = function () {
     navbarHandler();
 
     const suggestions = document.getElementById("suggestions");
+    suggestions.style.display = "none";
     const cerca = document.getElementById('cerca');
 
     if ('geolocation' in navigator) {
@@ -12,9 +13,7 @@ window.onload = function () {
             const user_lon = position.coords.longitude;
             const response = await fetch(`https://nominatim.openstreetmap.org/reverse?lat=41.39&lon=2.17&format=json`);
             const data = await response.json();
-            document.getElementById('nom-ciutat').innerHTML = `${data.address.city}`;
             localStorage.setItem("ciutatUsuari", data.address.city);
-
             getWeather(user_lat, user_lon);
         });
     } else {
@@ -90,6 +89,8 @@ window.onload = function () {
     };
 
     async function getWeather(lat, lon) {
+        netejaElements();
+        document.getElementById("card-content").style.opacity = "0";
         const response = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&hourly=temperature_2m,relativehumidity_2m,precipitation_probability,weathercode,is_day&daily=weathercode,temperature_2m_max,temperature_2m_min,precipitation_probability_max&current_weather=true&timezone=auto`);
         const data = await response.json();
         const ciutatArray = cerca.value.split(',', 1)
@@ -103,8 +104,8 @@ window.onload = function () {
     }
 
     function nouPanellTemps(data) {
-        document.getElementById("afegir").classList.remove("actiu");
         comprovaCiutatFavorita();
+        document.getElementById("afegir").classList.remove("actiu");
         const dataActual = data.current_weather.time;
         const indexOfHoraActual = data.hourly.time.indexOf(dataActual);
         const previsionsHores = data.hourly.time.slice(indexOfHoraActual + 1, indexOfHoraActual + 11);
@@ -112,6 +113,8 @@ window.onload = function () {
 
         if (cerca.value.length != 0) {
             document.getElementById('nom-ciutat').innerHTML = cerca.value.split(',', 1);
+        } else {
+            document.getElementById('nom-ciutat').innerHTML = localStorage.getItem("ciutatUsuari");
         }
         data.current_weather.is_day ? (
             document.getElementById("weather").innerHTML = `<img src="assets/img/weather-icons/weathercode-${data.current_weather.weathercode}.svg" alt="weather">`
@@ -160,6 +163,7 @@ window.onload = function () {
                                     </div>`;
             document.getElementById("previsionsDies").appendChild(diaActual);
         });
+        document.getElementById("card-content").style.opacity = "1";
     }
 
     document.getElementById("boto").addEventListener("click", async () => {
@@ -207,5 +211,16 @@ window.onload = function () {
                 document.getElementById("afegir").classList.add("actiu");
             }
         });
+    }
+
+    function netejaElements() {
+        document.getElementById('nom-ciutat').innerHTML = "";
+        document.getElementById("previsionsDies").innerHTML = "";
+        document.getElementById("weather").innerHTML = "";
+        document.getElementById("temperatura-i-humitat").innerHTML = "";
+        document.getElementById("afegir").classList.remove("actiu");
+        document.getElementById("titol-previsionsHores").innerHTML = "";
+        document.getElementById("previsionsHores").innerHTML = "";
+        document.getElementById("previsionsDies").innerHTML = "";
     }
 } 

@@ -72,7 +72,7 @@ body {
 }
 
 #suggestions li:hover {
-    background-color: rgb(196, 196, 196);
+    background-color: rgb(230, 230, 230);
 }
 
 .card-container {
@@ -92,6 +92,15 @@ body {
     justify-content: space-between;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
     margin-left: 68px;
+}
+
+.card-content {
+    width: 100%;
+    display: flex;
+    height: 100%;
+    border-radius: inherit;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
 }
 
 .card-content-1 {
