@@ -8,7 +8,7 @@
     <link type="text/css" rel="stylesheet" href="/assets/stylesheets/index.css">
 </head>
 
-<body>
+<body class="bg">
     <div class="text-inicial">
         <h1> Inicia sessió </h1>
         <a href="/home">
@@ -21,6 +21,15 @@
             </div>
         </a>
     </div>
+    <script>
+        window.addEventListener("resize", myFunction);
+
+        function myFunction() {
+            body = document.getElementsByTagName('body')[0];
+            body.classList.remove('bg');
+            body.classList.add('bg');
+        }
+    </script>
 </body>
 
 </html>

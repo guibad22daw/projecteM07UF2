@@ -10,14 +10,28 @@ p {
     margin: 0;
 }
 
-body {
-    background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
+.bg {
     height: 100%;
     font-family: 'Poppins', sans-serif;
+}
+
+.bg::before {
+    content: "";
+    position: fixed;
+    z-index: -2;
+    top: 0;
+    left: 0;
+    width: 600%;
+    bottom: 0;
+    background: linear-gradient(45deg, #F17C58, #E94584, #24AADB, #27DBB1, #FFDC18, #FF3706);
+    animation: gradient 16s linear infinite alternate;
+}
+
+@keyframes gradient {
+    100% {
+        transform: translateX(-83.33%)
+            /* 5/6x100% */
+    }
 }
 
 .titol {
@@ -46,6 +60,10 @@ body {
 
 .barra-cercar form {
     width: 400px;
+}
+
+#formCerca input {
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
 }
 
 .barra-cercar input {
@@ -275,18 +293,4 @@ body {
 
 .boto svg.actiu {
     fill: black;
-}
-
-@keyframes gradient {
-    0% {
-        background-position: 0% 50%;
-    }
-
-    50% {
-        background-position: 100% 50%;
-    }
-
-    100% {
-        background-position: 0% 50%;
-    }
 }

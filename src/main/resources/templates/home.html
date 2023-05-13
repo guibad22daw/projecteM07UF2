@@ -15,7 +15,7 @@
     <script src="../static/assets/javascript/home.js" th:src="@{assets/javascript/home.js}" type="module"></script>
 </head>
 
-<body>
+<body class="bg">
     <div class="titol">
         <h1>TheWeatherClot</h1>
     </div>
@@ -64,6 +64,15 @@
         </div>
         <div th:include="footer_plantilla :: footer"></div>
     </div>
+    <script>
+        window.addEventListener("resize", myFunction);
+
+        function myFunction() {
+            body = document.getElementsByTagName('body')[0];
+            body.classList.remove('bg');
+            body.classList.add('bg');
+        }
+    </script>
 </body>
 
 </html>
