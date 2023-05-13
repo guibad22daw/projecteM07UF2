@@ -25,6 +25,9 @@
     <div class="content-container">
         <div class="card-container">
             <swiper-container class="mySwiper card-container" navigation="true">
+                <div th:if="${#lists.isEmpty(ciutats)}" class="card-container titolFavsBuit">
+                    <h2>Afegeix les teves ciutats preferides per poder consultar-les aquí.</h2>
+                </div>
                 <swiper-slide class="card-container" th:each="ciutat: ${ciutats}">
                     <div class="card">
                         <div class="card-content" id="card-content">
