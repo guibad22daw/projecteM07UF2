@@ -20,24 +20,6 @@ public class UsuarisController {
     @Autowired
     private UsuariRepositori repositori;
 
-    /*
-    @ModelAttribute("usuaris")
-    public List<Usuari> inicialitzar() {
-
-        List<Usuari> usuaris = new ArrayList<>();
-        for (Usuari c : repositori.findAll()) {
-            usuaris.add(c);
-        }
-        return usuaris;
-    }
-
-    @RequestMapping(value={"/home", "/usuari"})
-    String mostrarFormulari() {
-        return("formulari");
-    }
-    */
-
-
     @RequestMapping(value="/home", method = RequestMethod.GET)
     String desaUsuari() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -142,26 +124,4 @@ public class UsuarisController {
         System.out.println(ciutats);
         return ciutats;
     }
-
-    /*
-    @RequestMapping(value="/esborrarClient", method = RequestMethod.GET)
-    String esborrarClient(@SessionAttribute("clients") List<Usuari> clients, @RequestParam (defaultValue = "") String id) {
-
-        System.out.println(id);
-
-        repositori.deleteById(id);
-        Usuari t = new Usuari();
-        t.setId(id);
-        clients.remove(t);
-
-        return("llistarClients");
-    }
-
-    @RequestMapping(value="/mostrarClients", method = RequestMethod.GET)
-    void mostrarClients(){
-        List <Usuari> client = new ArrayList<Usuari>();
-        for (Usuari c : repositori.findByCognom("Grau")) {
-            System.out.println(c);
-        }
-    } */
 }

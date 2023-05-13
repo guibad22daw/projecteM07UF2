@@ -38,12 +38,7 @@ window.onload = function () {
     async function getWeather(lat, lon, card, ciutat) {
         const response = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&hourly=temperature_2m,relativehumidity_2m,precipitation_probability,weathercode,is_day&daily=weathercode,temperature_2m_max,temperature_2m_min,precipitation_probability_max&current_weather=true&timezone=auto`);
         const data = await response.json();
-        const novaCiutat = {
-            nom: ciutat,
-            latitud: lat,
-            longitud: lon
-        };
-        localStorage.setItem('ciutat', JSON.stringify(novaCiutat));
+
         nouPanellTemps(data, card, ciutat);
     }
 
@@ -105,31 +100,33 @@ window.onload = function () {
         });
     }
 
-    document.getElementById("boto").addEventListener("click", async () => {
-        let url = "";
+    const removeFavoriteBtns = document.querySelectorAll('#boto');
 
-        if (document.getElementById("afegir").classList.contains("actiu")) {
-            document.getElementById("afegir").classList.remove("actiu");
-            url = "/esborraCiutat";
-        } else {
-            document.getElementById("afegir").classList.add("actiu");
-            url = "/desaCiutat";
-        }
+    removeFavoriteBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            btn.querySelector("#afegir").classList.add("noActiu");
+            const ciutatCard = JSON.parse(btn.getAttribute('data'));
 
-        const novaCiutat = localStorage.getItem('ciutat');
-        fetch(url, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: novaCiutat,
-        }).then(response => {
-            if (response.ok) {
-                console.log('Petició efectuada correctament.');
-                window.location.reload();
-            } else {
-                console.log("Error al efectuar la petició.");
-            }
+            const esborraCiutat = {
+                nom: ciutatCard.nom,
+                latitud: ciutatCard.latitud,
+                longitud: ciutatCard.longitud
+            };
+
+            fetch('/esborraCiutat', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(esborraCiutat),
+            }).then(response => {
+                if (response.ok) {
+                    console.log('Petició efectuada correctament.');
+                    window.location.reload();
+                } else {
+                    console.log("Error al efectuar la petició.");
+                }
+            });
         });
     });
 } 

@@ -2,6 +2,7 @@ package edu.fje2.daw2.spring1.model;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class Ciutat {
     private String nom;
@@ -43,10 +44,12 @@ public class Ciutat {
 
     @Override
     public String toString() {
-        return "Ciutat{" +
-                "nom='" + nom + '\'' +
-                ", latitud=" + latitud +
-                ", longitud=" + longitud +
-                '}';
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            return objectMapper.writeValueAsString(this);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }
