@@ -20,7 +20,7 @@ window.onload = function () {
 
     for (let i = 0; i < cards.length; i++) {
         const card = cards[i];
-        const ciutat = card.querySelector('#nom-ciutat').textContent;
+        const ciutat = card.querySelector('#nom-ciutat').getAttribute('data');
         const lat = card.querySelector('#lat').textContent;
         const lon = card.querySelector('#lon').textContent;
         console.log('ciutat,lat,lon', ciutat, lat, lon);
@@ -87,9 +87,9 @@ window.onload = function () {
                                         </div>
                                     </div>`;
             card.querySelector("#previsionsDies").appendChild(diaActual);
-            document.getElementById("card-content").style.opacity = "1";
-            document.getElementById("card-content").style.transitionDuration = "1s";
         });
+        document.getElementById("card-content").style.opacity = "1";
+        document.getElementById("card-content").style.transitionDuration = "1s";
     }
 
     const removeFavoriteBtns = document.querySelectorAll('#boto');
