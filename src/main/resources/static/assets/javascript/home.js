@@ -62,7 +62,7 @@ window.onload = function () {
                 resultats.forEach(suggestion => {
                     const localitzacio = document.createElement("li");
                     localitzacio.value = `${suggestion.name}`;
-                    localitzacio.innerHTML = `${suggestion.name}, ${suggestion.admin1 ? suggestion.admin1 + ","  : "" } ${suggestion.country}`;
+                    localitzacio.innerHTML = `${suggestion.name}, ${suggestion.admin1 ? suggestion.admin1 + ",": (suggestion.admin2 ? suggestion.admin2 + "," : "") } ${suggestion.country}`;
                     localitzacio.onclick = () => {
                         suggestions.style.display = 'none';
                         cerca.style.borderRadius = "20px";
