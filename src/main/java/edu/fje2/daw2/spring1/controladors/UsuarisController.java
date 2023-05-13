@@ -20,6 +20,10 @@ public class UsuarisController {
     @Autowired
     private UsuariRepositori repositori;
 
+    /**
+     * Desa un nou usuari a la base de dades si no existeix.
+     * @return La vista "home".
+     */
     @RequestMapping(value="/home", method = RequestMethod.GET)
     String desaUsuari() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -39,6 +43,11 @@ public class UsuarisController {
         return("home");
     }
 
+    /**
+     * Obté les ciutats favorites de l'usuari i les mostra en la vista "favorits".
+     * @param model Model de la vista.
+     * @return La vista "favorits".
+     */
     @GetMapping(value="/favorits")
     String getFavorits(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -51,6 +60,11 @@ public class UsuarisController {
         return("favorits");
     }
 
+    /**
+     * Gestiona la petició POST per desar una nova ciutat als favorits de l'usuari.
+     * @param ciutat Objecte que representa la ciutat que s'ha de desar.
+     * @return Retorna una resposta HTTP.
+     */
     @PostMapping(value="/desaCiutat")
     public ResponseEntity<?> desaCiutat(@RequestBody Ciutat ciutat) {
         System.out.println(ciutat);
@@ -77,6 +91,11 @@ public class UsuarisController {
         return ResponseEntity.ok().build();
     }
 
+    /**
+     * Esborra una ciutat de les ciutats favorites de l'usuari.
+     * @param ciutat La ciutat a esborrar.
+     * @return ResponseEntity amb el codi d'estat HTTP corresponent.
+     */
     @PostMapping(value="/esborraCiutat")
     public ResponseEntity<?> esborraCiutat(@RequestBody Ciutat ciutat) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -106,6 +125,10 @@ public class UsuarisController {
         return ResponseEntity.ok().build();
     }
 
+    /**
+     * Retorna una llista amb les ciutats preferides d'un usuari.
+     * @return Llista de Ciutats que representa les ciutats preferides de l'usuari
+     */
     @GetMapping("/getCiutats")
     @ResponseBody
     public List<Ciutat> getCiutats() {
