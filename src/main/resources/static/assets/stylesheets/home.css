@@ -156,6 +156,11 @@ p {
     align-items: center;
 }
 
+#nom-provincia-pais {
+    font-weight: 300;
+    margin-top: -3.5px;
+}
+
 #temperatura-i-humitat {
     display: flex;
     justify-content: space-between;

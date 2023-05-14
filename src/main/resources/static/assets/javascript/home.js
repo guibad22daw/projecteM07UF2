@@ -13,7 +13,16 @@ window.onload = function () {
             const user_lon = position.coords.longitude;
             const response = await fetch(`https://nominatim.openstreetmap.org/reverse?lat=41.39&lon=2.17&format=json`);
             const data = await response.json();
-            localStorage.setItem("ciutatUsuari", data.address.city);
+            console.log('data', data);
+            const response2 = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${data.address.city}`);
+            if (response2.ok) {
+                const data2 = await response2.json();
+                const resultats2 = data2.results;
+                localStorage.setItem("ciutatUsuari", `${resultats2[0].name}, ${resultats2[0].admin1 ? resultats2[0].admin1 + ",": (resultats2[0].admin2 ? resultats2[0].admin2 + "," : "") } ${resultats2[0].country}`);
+            } else {
+                console.log('error');
+            }
+
             getWeather(user_lat, user_lon);
         });
     } else {
@@ -66,7 +75,7 @@ window.onload = function () {
                     localitzacio.onclick = () => {
                         suggestions.style.display = 'none';
                         cerca.style.borderRadius = "20px";
-                        cerca.value = `${suggestion.name}, ${suggestion.admin1}, ${suggestion.country}`;
+                        cerca.value = `${suggestion.name}, ${suggestion.admin1 ? suggestion.admin1 + ",": (suggestion.admin2 ? suggestion.admin2 + "," : "") } ${suggestion.country}`;
                         getWeather(suggestion.latitude, suggestion.longitude);
                     };
                     suggestions.appendChild(localitzacio);
@@ -93,9 +102,9 @@ window.onload = function () {
         document.getElementById("card-content").style.opacity = "0";
         const response = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&hourly=temperature_2m,relativehumidity_2m,precipitation_probability,weathercode,is_day&daily=weathercode,temperature_2m_max,temperature_2m_min,precipitation_probability_max&current_weather=true&timezone=auto`);
         const data = await response.json();
-        const ciutatArray = cerca.value.split(',', 1)
+        const ciutatArray = cerca.value;
         const novaCiutat = {
-            nom: ciutatArray[0] || localStorage.getItem("ciutatUsuari"),
+            nom: ciutatArray || localStorage.getItem("ciutatUsuari"),
             latitud: lat,
             longitud: lon
         };
@@ -112,10 +121,21 @@ window.onload = function () {
         const previsionsDies = data.daily.time;
 
         if (cerca.value.length != 0) {
-            document.getElementById('nom-ciutat').innerHTML = cerca.value.split(',', 1);
+            let cadenaCerca= cerca.value.split(", ");
+            let ciutat = cadenaCerca[0];
+            let provinciaOPais = cadenaCerca[1];
+            let pais = cadenaCerca[2];
+            document.getElementById('nom-ciutat').innerHTML = ciutat;
+            document.getElementById('nom-provincia-pais').innerHTML = `${pais ? provinciaOPais+", "+pais : provinciaOPais}`;
         } else {
-            document.getElementById('nom-ciutat').innerHTML = localStorage.getItem("ciutatUsuari");
+            let nomCiutatUsuari = localStorage.getItem("ciutatUsuari").split(", ");
+            let ciutat = nomCiutatUsuari[0];
+            let provinciaOPais = nomCiutatUsuari[1];
+            let pais = nomCiutatUsuari[2];
+            document.getElementById('nom-ciutat').innerHTML = ciutat;
+            document.getElementById('nom-provincia-pais').innerHTML = `${pais ? provinciaOPais+", "+pais : provinciaOPais}`;
         }
+
         data.current_weather.is_day ? (
             document.getElementById("weather").innerHTML = `<img src="assets/img/weather-icons/weathercode-${data.current_weather.weathercode}.svg" alt="weather">`
         ) : (document.getElementById("weather").innerHTML = `<img src="assets/img/weather-icons/night/weathercode-${data.current_weather.weathercode}.svg" alt="weather">`);
