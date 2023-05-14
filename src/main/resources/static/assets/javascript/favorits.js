@@ -65,7 +65,7 @@ window.onload = function () {
                 horaActual.innerHTML += `<div class="iconaHora"><img src="assets/img/weather-icons/weathercode-${data.hourly.weathercode[indexOfHoraActual + index]}.svg" alt="weather" style="width: 40px;"></div>`;
             }
             horaActual.innerHTML += `<div class="temperaturaHora">${data.hourly.temperature_2m[indexOfHoraActual + index]} ºC</div>
-                                    <div class="humitatHora">${data.hourly.precipitation_probability[indexOfHoraActual + index]} % <img src="assets/img/water-rain-drop-png.png" alt="precipitation_probability" style="width: 25px;"/></div>`;
+                                    <div class="precipitacioHora">${data.hourly.precipitation_probability[indexOfHoraActual + index]} % <img src="assets/img/weather-icons/weathercode-55.svg" alt="precipitation_probability" style="width: 20px;"/></div>`;
             card.querySelector("#previsionsHores").appendChild(horaActual);
         });
 
@@ -83,7 +83,7 @@ window.onload = function () {
                                         <p>${index == 0 ? "Avui" : diaSetmana}</p>
                                         <div class="icona-precipitacions">
                                             <div class="iconaDia"><img src="assets/img/weather-icons/weathercode-${data.daily.weathercode[index]}.svg" alt="weather" style="width: 40px;"></div>
-                                            <div class="precipitacions">${data.daily.precipitation_probability_max[index]} % <img src="assets/img/water-rain-drop-png.png" alt="precipitation_probability" style="width: 30px;"/></div>
+                                            <div class="precipitacions">${data.daily.precipitation_probability_max[index]} % <img src="assets/img/weather-icons/weathercode-55.svg" alt="precipitation_probability" style="width: 25px;"/></div>
                                         </div>
                                     </div>
                                     <div class="infoDia">

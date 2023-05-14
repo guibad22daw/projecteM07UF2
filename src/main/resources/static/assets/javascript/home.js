@@ -139,7 +139,8 @@ window.onload = function () {
         data.current_weather.is_day ? (
             document.getElementById("weather").innerHTML = `<img src="assets/img/weather-icons/weathercode-${data.current_weather.weathercode}.svg" alt="weather">`
         ) : (document.getElementById("weather").innerHTML = `<img src="assets/img/weather-icons/night/weathercode-${data.current_weather.weathercode}.svg" alt="weather">`);
-        document.getElementById("temperatura-i-humitat").innerHTML = `<h5>${data.current_weather.temperature} ºC </h5><h5>${data.hourly.relativehumidity_2m[indexOfHoraActual]} %</h5>`;
+        document.getElementById("temperatura-i-humitat").innerHTML = `<h5>${data.current_weather.temperature} ºC </h5>
+                                                                      <h5>${data.hourly.relativehumidity_2m[indexOfHoraActual]} %</h5>`;
 
         document.getElementById("titol-previsionsHores").innerHTML = `Properes 10 hores`;
         document.getElementById("previsionsHores").innerHTML = "";
@@ -155,7 +156,7 @@ window.onload = function () {
                 horaActual.innerHTML += `<div class="iconaHora"><img src="assets/img/weather-icons/weathercode-${data.hourly.weathercode[indexOfHoraActual + index]}.svg" alt="weather" style="width: 40px;"></div>`;
             }
             horaActual.innerHTML += `<div class="temperaturaHora">${data.hourly.temperature_2m[indexOfHoraActual + index]} ºC</div>
-                                    <div class="humitatHora">${data.hourly.precipitation_probability[indexOfHoraActual + index]} % <img src="assets/img/water-rain-drop-png.png" alt="precipitation_probability" style="width: 25px;"/></div>`;
+                                    <div class="precipitacioHora">${data.hourly.precipitation_probability[indexOfHoraActual + index]} % <img src="assets/img/weather-icons/weathercode-55.svg" alt="precipitation_probability" style="width: 20px;"/></div>`;
             document.getElementById("previsionsHores").appendChild(horaActual);
         });
 
@@ -166,14 +167,14 @@ window.onload = function () {
             const diaSetmana = diesSetmana[dataAAA_MM_DD.getDay()];
 
             const diaActual = document.createElement("div");
-            diaActual.className = "previsioDia";
+            diaActual.className = "previsioDia";    
             diaActual.setAttribute("key", `${index}`);
 
             diaActual.innerHTML = `<div class="dia">
                                         <p>${index == 0 ? "Avui" : diaSetmana}</p>
                                         <div class="icona-precipitacions">
                                             <div class="iconaDia"><img src="assets/img/weather-icons/weathercode-${data.daily.weathercode[index]}.svg" alt="weather" style="width: 40px;"></div>
-                                            <div class="precipitacions">${data.daily.precipitation_probability_max[index]} % <img src="assets/img/water-rain-drop-png.png" alt="precipitation_probability" style="width: 30px;"/></div>
+                                            <div class="precipitacions">${data.daily.precipitation_probability_max[index]} % <img src="assets/img/weather-icons/weathercode-55.svg" alt="precipitation_probability" style="width: 25px;"/></div>
                                         </div>
                                     </div>
                                     <div class="infoDia">
