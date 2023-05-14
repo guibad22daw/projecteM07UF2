@@ -60,47 +60,6 @@ p {
     text-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
 }
 
-.barra-cercar {
-    display: flex;
-    width: 100%;
-    column-gap: 40px;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    margin: 0px 0px 40px 0px;
-}
-
-.barra-cercar form {
-    width: 400px;
-}
-
-.barra-cercar input {
-    border-radius: 20px;
-    padding: 10px;
-}
-
-#suggestions {
-    display: block;
-    z-index: 1;
-    position: absolute;
-    background-color: white;
-    width: 400px;
-    border-top-left-radius: 5px;
-    border-top-right-radius: 10px;
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 20px;
-    border: 1px solid grey;
-}
-
-#suggestions li {
-    list-style: none;
-    padding: 5px;
-}
-
-#suggestions li:hover {
-    background-color: rgb(196, 196, 196);
-}
-
 .card-container {
     display: flex;
     justify-content: center;
@@ -161,6 +120,11 @@ p {
     justify-content: center;
     row-gap: 5px;
     align-items: center;
+}
+
+#nom-provincia-pais {
+    font-weight: 300;
+    margin-top: -3.5px;
 }
 
 #temperatura-i-humitat {

@@ -34,13 +34,18 @@ window.onload = function () {
         nouPanellTemps(data, card, ciutat);
     }
 
-    function nouPanellTemps(data, card, ciutat) {
+    function nouPanellTemps(data, card, cadenaCiutat) {
         const dataActual = data.current_weather.time;
         const indexOfHoraActual = data.hourly.time.indexOf(dataActual);
         const previsionsHores = data.hourly.time.slice(indexOfHoraActual + 1, indexOfHoraActual + 11);
         const previsionsDies = data.daily.time;
 
+        let cadenaCerca = cadenaCiutat.split(", ");
+        let ciutat = cadenaCerca[0];
+        let provinciaOPais = cadenaCerca[1];
+        let pais = cadenaCerca[2];
         card.querySelector("#nom-ciutat").innerHTML = ciutat;
+        card.querySelector("#nom-provincia-pais").innerHTML = `${pais ? provinciaOPais+", "+pais : provinciaOPais}`;
         data.current_weather.is_day ? (
             card.querySelector("#weather").innerHTML = `<img src="assets/img/weather-icons/weathercode-${data.current_weather.weathercode}.svg" alt="weather">`
         ) : (card.querySelector("#weather").innerHTML = `<img src="assets/img/weather-icons/night/weathercode-${data.current_weather.weathercode}.svg" alt="weather">`);
