@@ -24,7 +24,7 @@ public class UsuarisController {
      * Desa un nou usuari a la base de dades si no existeix.
      * @return La vista "home".
      */
-    @RequestMapping(value="/home", method = RequestMethod.GET)
+    @GetMapping(value="/home")
     String desaUsuari() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getPrincipal().toString().substring(authentication.getPrincipal().toString().indexOf("username=") + 9);
@@ -52,7 +52,17 @@ public class UsuarisController {
     String getFavorits(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getPrincipal().toString().substring(authentication.getPrincipal().toString().indexOf("username=") + 9);
+        String mail = authentication.getPrincipal().toString().substring(authentication.getPrincipal().toString().indexOf("email=") + 6);
 
+        boolean existeix = repositori.existsByUsername(username);
+        if (!existeix) {
+            Usuari nouUsuari = new Usuari(username, mail, new ArrayList<>());
+            repositori.save(nouUsuari);
+            System.out.println("Nou usuari creat");
+        }
+        else {
+            System.out.println("Usuari ja existent. Id = " + username);
+        }
         Usuari usuari = repositori.findByUsername(username);
         List<Ciutat> ciutats = usuari.getCiutats();
 
@@ -96,7 +106,7 @@ public class UsuarisController {
      * @param ciutat La ciutat a esborrar.
      * @return ResponseEntity amb el codi d'estat HTTP corresponent.
      */
-    @PostMapping(value="/esborraCiutat")
+    @DeleteMapping(value="/esborraCiutat")
     public ResponseEntity<?> esborraCiutat(@RequestBody Ciutat ciutat) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getPrincipal().toString().substring(authentication.getPrincipal().toString().indexOf("username=") + 9);

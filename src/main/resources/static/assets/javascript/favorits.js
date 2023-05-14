@@ -111,7 +111,7 @@ window.onload = function () {
             };
 
             fetch('/esborraCiutat', {
-                method: 'POST',
+                method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json'
                 },

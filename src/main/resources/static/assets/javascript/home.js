@@ -121,7 +121,7 @@ window.onload = function () {
         const previsionsDies = data.daily.time;
 
         if (cerca.value.length != 0) {
-            let cadenaCerca= cerca.value.split(", ");
+            let cadenaCerca = cerca.value.split(", ");
             let ciutat = cadenaCerca[0];
             let provinciaOPais = cadenaCerca[1];
             let pais = cadenaCerca[2];
@@ -188,19 +188,22 @@ window.onload = function () {
     }
 
     document.getElementById("boto").addEventListener("click", async () => {
-        let url = "";
+        let url;
+        let metode;
 
         if (document.getElementById("afegir").classList.contains("actiu")) {
             document.getElementById("afegir").classList.remove("actiu");
             url = "/esborraCiutat";
+            metode = "DELETE";
         } else {
             document.getElementById("afegir").classList.add("actiu");
             url = "/desaCiutat";
+            metode = "POST";
         }
 
         const novaCiutat = localStorage.getItem('ciutat');
         fetch(url, {
-            method: 'POST',
+            method: metode,
             headers: {
                 'Content-Type': 'application/json'
             },
