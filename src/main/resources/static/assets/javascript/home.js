@@ -18,7 +18,7 @@ window.onload = function () {
             if (response2.ok) {
                 const data2 = await response2.json();
                 const resultats2 = data2.results;
-                localStorage.setItem("ciutatUsuari", `${resultats2[0].name}, ${resultats2[0].admin1 ? resultats2[0].admin1 + ",": (resultats2[0].admin2 ? resultats2[0].admin2 + "," : "") } ${resultats2[0].country}`);
+                localStorage.setItem("ciutatUsuari", `${resultats2[0].name}, ${resultats2[0].admin1 ? resultats2[0].admin1 + "," : (resultats2[0].admin2 ? resultats2[0].admin2 + "," : "")} ${resultats2[0].country}`);
             } else {
                 console.log('error');
             }
@@ -71,11 +71,11 @@ window.onload = function () {
                 resultats.forEach(suggestion => {
                     const localitzacio = document.createElement("li");
                     localitzacio.value = `${suggestion.name}`;
-                    localitzacio.innerHTML = `${suggestion.name}, ${suggestion.admin1 ? suggestion.admin1 + ",": (suggestion.admin2 ? suggestion.admin2 + "," : "") } ${suggestion.country}`;
+                    localitzacio.innerHTML = `${suggestion.name}, ${suggestion.admin1 ? suggestion.admin1 + "," : (suggestion.admin2 ? suggestion.admin2 + "," : "")} ${suggestion.country}`;
                     localitzacio.onclick = () => {
                         suggestions.style.display = 'none';
                         cerca.style.borderRadius = "20px";
-                        cerca.value = `${suggestion.name}, ${suggestion.admin1 ? suggestion.admin1 + ",": (suggestion.admin2 ? suggestion.admin2 + "," : "") } ${suggestion.country}`;
+                        cerca.value = `${suggestion.name}, ${suggestion.admin1 ? suggestion.admin1 + "," : (suggestion.admin2 ? suggestion.admin2 + "," : "")} ${suggestion.country}`;
                         getWeather(suggestion.latitude, suggestion.longitude);
                     };
                     suggestions.appendChild(localitzacio);
@@ -120,21 +120,12 @@ window.onload = function () {
         const previsionsHores = data.hourly.time.slice(indexOfHoraActual + 1, indexOfHoraActual + 11);
         const previsionsDies = data.daily.time;
 
-        if (cerca.value.length != 0) {
-            let cadenaCerca = cerca.value.split(", ");
-            let ciutat = cadenaCerca[0];
-            let provinciaOPais = cadenaCerca[1];
-            let pais = cadenaCerca[2];
-            document.getElementById('nom-ciutat').innerHTML = ciutat;
-            document.getElementById('nom-provincia-pais').innerHTML = `${pais ? provinciaOPais+", "+pais : provinciaOPais}`;
-        } else {
-            let nomCiutatUsuari = localStorage.getItem("ciutatUsuari").split(", ");
-            let ciutat = nomCiutatUsuari[0];
-            let provinciaOPais = nomCiutatUsuari[1];
-            let pais = nomCiutatUsuari[2];
-            document.getElementById('nom-ciutat').innerHTML = ciutat;
-            document.getElementById('nom-provincia-pais').innerHTML = `${pais ? provinciaOPais+", "+pais : provinciaOPais}`;
-        }
+        let cadenaCerca = cerca.value.length != 0 ? cerca.value.split(", ") : localStorage.getItem("ciutatUsuari").split(", ");
+        let ciutat = cadenaCerca[0];
+        let provinciaOPais = cadenaCerca[1];
+        let pais = cadenaCerca[2];
+        document.getElementById('nom-ciutat').innerHTML = ciutat;
+        document.getElementById('nom-provincia-pais').innerHTML = `${pais ? provinciaOPais + ", " + pais : provinciaOPais}`;
 
         data.current_weather.is_day ? (
             document.getElementById("weather").innerHTML = `<img src="assets/img/weather-icons/weathercode-${data.current_weather.weathercode}.svg" alt="weather">`
@@ -167,7 +158,7 @@ window.onload = function () {
             const diaSetmana = diesSetmana[dataAAA_MM_DD.getDay()];
 
             const diaActual = document.createElement("div");
-            diaActual.className = "previsioDia";    
+            diaActual.className = "previsioDia";
             diaActual.setAttribute("key", `${index}`);
 
             diaActual.innerHTML = `<div class="dia">
@@ -225,13 +216,11 @@ window.onload = function () {
             },
         });
         const ciutats = await response.json();
-        console.log(ciutats);
 
         ciutats.forEach(ciutat => {
             const ciutatNom = ciutat.nom;
             if (cerca.value.includes(ciutatNom) || localStorage.getItem('ciutatUsuari').includes(ciutatNom)) {
                 localStorage.setItem('ciutatUsuari', "");
-                console.log('cerca.value', cerca.value);
                 document.getElementById("afegir").classList.add("actiu");
             }
         });

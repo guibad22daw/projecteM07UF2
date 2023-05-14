@@ -102,7 +102,7 @@ public class UsuarisController {
     }
 
     /**
-     * Esborra una ciutat de les ciutats favorites de l'usuari.
+     * Esborra una ciutat de les favorites de l'usuari amb la recepció d'una petició DELETE.
      * @param ciutat La ciutat a esborrar.
      * @return ResponseEntity amb el codi d'estat HTTP corresponent.
      */
